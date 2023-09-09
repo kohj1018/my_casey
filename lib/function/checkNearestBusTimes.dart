@@ -1,8 +1,8 @@
 import 'package:intl/intl.dart';
 import 'package:my_casey/const/bus_time.dart';
 
-Map<String, List<int>> checkNearestBusTimes(String busType, bool isWeekend) {
-  List<int> curTime = DateFormat('HH:mm').format(DateTime.now()).split(':').map((t) => int.parse(t)).toList();
+Map<String, List<int>> checkNearestBusTimes(String busType, bool isWeekend, DateTime now) {
+  List<int> curTime = DateFormat('HH:mm').format(now).split(':').map((t) => int.parse(t)).toList();
   if (curTime[0] == 0) curTime[0] = 24; // 현재 시간이 0시면 24시로 format 변경
 
   // 버스 종류, 평일 구분에 따라 버스 시간표 선택

@@ -5,17 +5,26 @@ class BusTimeCard extends StatelessWidget {
 
   final String busType;
   final String lastBusTime;
+  final int lastBusMinDiff;
   final String nextBusTime;
+  final int nextBusMinDiff;
 
   const BusTimeCard({
     required this.busType,
     required this.lastBusTime,
+    required this.lastBusMinDiff,
     required this.nextBusTime,
+    required this.nextBusMinDiff,
     Key? key
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    String modifiedLastBusTime = lastBusTime;
+    String modifiedNextBusTime = nextBusTime;
+    if (lastBusTime.substring(0, 2) == '24') modifiedLastBusTime.replaceAll('24', '00');
+    if (nextBusTime.substring(0, 2) == '24') modifiedNextBusTime.replaceAll('24', '00');
+
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
@@ -46,10 +55,11 @@ class BusTimeCard extends StatelessWidget {
               ),
               SizedBox(width: 32.0),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('$lastBusTime 출발 버스\n- 출발 후 O분 경과'),
+                  if (lastBusMinDiff >= 0) Text('$modifiedLastBusTime 출발 버스\n- 출발 후 $lastBusMinDiff분 경과'),
                   SizedBox(height: 8.0),
-                  Text('$nextBusTime 출발 버스\n- 출발 O분 전')
+                  if (nextBusMinDiff >= 0) Text('$modifiedNextBusTime 출발 버스\n- 출발 $nextBusMinDiff분 전')
                 ],
               ),
             ],
