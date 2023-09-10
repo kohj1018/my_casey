@@ -69,9 +69,39 @@ class BusTimeCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (lastBusMinDiff >= 0) Text('$modifiedLastBusTime 출발 버스\n- 출발 후 $lastBusMinDiff분 경과'),
+                    if (lastBusMinDiff >= 0) RichText(
+                      text: TextSpan(
+                        text: '$modifiedLastBusTime 출발 버스\n- 출발 후 ',
+                        children: [
+                          TextSpan(
+                            text: '$lastBusMinDiff분',
+                            style: const TextStyle(
+                              color: Colors.red,
+                            ),
+                          ),
+                          const TextSpan(
+                            text: ' 경과'
+                          )
+                        ]
+                      ),
+                    ),
                     SizedBox(height: 8.0),
-                    if (nextBusMinDiff >= 0) Text('$modifiedNextBusTime 출발 버스\n- 출발 $nextBusMinDiff분 전')
+                    if (nextBusMinDiff >= 0) RichText(
+                      text: TextSpan(
+                        text: '$modifiedNextBusTime 출발 버스\n- 출발 ',
+                        children: [
+                          TextSpan(
+                            text: '$nextBusMinDiff분',
+                            style: const TextStyle(
+                                color: Colors.blueAccent,
+                            ),
+                          ),
+                          const TextSpan(
+                            text: ' 전'
+                          )
+                        ]
+                      ),
+                    )
                   ],
                 ),
               ],

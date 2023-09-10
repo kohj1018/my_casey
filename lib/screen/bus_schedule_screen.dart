@@ -47,9 +47,9 @@ class BusScheduleScreen extends StatelessWidget {
                       style: TextStyle(color: Colors.black),
                       children: [
                         TextSpan(
-                          text: isWeekend ? 'O' : 'X',
+                          text: isWeekend ? 'Yes' : 'No',
                           style: TextStyle(
-                              color: isWeekend ? Colors.red : Colors.blueAccent
+                              color: isWeekend ? Colors.red : Colors.black
                           ),
                         )
                       ]
