@@ -13,6 +13,7 @@ class CalendarScreen extends StatefulWidget {
 
 class _CalendarScreenState extends State<CalendarScreen> {
   DateTime? selectedDay;
+  DateTime focusedDay = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
       locale: 'ko_KR',
       firstDay: DateTime.utc(2023, 9, 1),
       lastDay: DateTime.utc(2024, 10, 31),
-      focusedDay: DateTime.now(),
+      focusedDay: focusedDay,
       headerStyle: const HeaderStyle(
         formatButtonVisible: false,
         titleCentered: true,
@@ -32,6 +33,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
       onDaySelected: (DateTime selectedDay, DateTime focusedDay) {
         setState(() {
           this.selectedDay = selectedDay;
+          this.focusedDay = selectedDay;
         });
       },
       selectedDayPredicate: (DateTime date) {
@@ -71,7 +73,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
         },
 
         defaultBuilder: (context, day, _) {
-          DateTime nextDay = day.add(const Duration(days: 1));
+          // DateTime nextDay = day.add(const Duration(days: 1));
           for (List<int> weekendDay in WEEKEND_LIST) {
 
             if (day.year == weekendDay[0] && day.month == weekendDay[1] && day.day == weekendDay[2]) {
