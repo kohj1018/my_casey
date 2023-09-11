@@ -72,6 +72,9 @@ class BusTimeCard extends StatelessWidget {
                     if (lastBusMinDiff >= 0) RichText(
                       text: TextSpan(
                         text: '$modifiedLastBusTime 출발 버스\n- 출발 후 ',
+                        style: const TextStyle(
+                          color: Colors.black,
+                        ),
                         children: [
                           TextSpan(
                             text: '$lastBusMinDiff분',
@@ -80,7 +83,10 @@ class BusTimeCard extends StatelessWidget {
                             ),
                           ),
                           const TextSpan(
-                            text: ' 경과'
+                            text: ' 경과',
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
                           )
                         ]
                       ),
@@ -89,6 +95,9 @@ class BusTimeCard extends StatelessWidget {
                     if (nextBusMinDiff >= 0) RichText(
                       text: TextSpan(
                         text: '$modifiedNextBusTime 출발 버스\n- 출발 ',
+                        style: const TextStyle(
+                          color: Colors.black,
+                        ),
                         children: [
                           TextSpan(
                             text: '$nextBusMinDiff분',
@@ -97,7 +106,10 @@ class BusTimeCard extends StatelessWidget {
                             ),
                           ),
                           const TextSpan(
-                            text: ' 전'
+                            text: ' 전',
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
                           )
                         ]
                       ),
