@@ -53,7 +53,7 @@ class DetailBusScheduleScreen extends StatelessWidget {
                       child: Container(
                         decoration: BoxDecoration(
                           color: !isWeekend ? Colors.black12 : Theme.of(context).scaffoldBackgroundColor,
-                          border: Border(
+                          border: const Border(
                             right: BorderSide(
                               width: 0.5,
                               color: Colors.black,
@@ -62,7 +62,7 @@ class DetailBusScheduleScreen extends StatelessWidget {
                         ),
                         child: Column(
                           children: [
-                            Text(
+                            const Text(
                               '평일',
                               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                             ),
@@ -88,7 +88,7 @@ class DetailBusScheduleScreen extends StatelessWidget {
                         color: isWeekend ? Colors.black12 : Theme.of(context).scaffoldBackgroundColor,
                         child: Column(
                           children: [
-                            Text(
+                            const Text(
                               '휴일',
                               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                             ),
@@ -118,7 +118,7 @@ class DetailBusScheduleScreen extends StatelessWidget {
               right: 0,
               child: Container(
                 height: 60.0,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   border: Border(
                     bottom: BorderSide(
@@ -134,7 +134,7 @@ class DetailBusScheduleScreen extends StatelessWidget {
                           Navigator.pop(context);
                         },
                       ),
-                      SizedBox(width: 16.0),
+                      const SizedBox(width: 16.0),
                       Text(
                         '$busType 버스 시간표',
                         style: TextStyle(fontSize: 16.0),

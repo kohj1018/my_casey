@@ -119,7 +119,7 @@ class _BusScheduleScreenState extends State<BusScheduleScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 18.0),
+                      const SizedBox(height: 18.0),
                       Row(
                         children: [
                           const Text('최신 시간표로 보기'),

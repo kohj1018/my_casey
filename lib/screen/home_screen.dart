@@ -23,8 +23,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
 
     final List<Widget> _widgetOptions = [
-      BusScheduleScreen(),
-      CalendarScreen(),
+      const BusScheduleScreen(),
+      const CalendarScreen(),
     ];
 
     return Scaffold(

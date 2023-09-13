@@ -8,7 +8,7 @@ void main() async {
   await initializeDateFormatting();
 
   runApp(
-    MaterialApp(
+    const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: HomeScreen(),
     )
