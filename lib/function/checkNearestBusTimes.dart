@@ -1,35 +1,64 @@
 import 'package:intl/intl.dart';
 import 'package:my_casey/const/bus_time.dart';
 
-Map<String, List<int>> checkNearestBusTimes(String busType, bool isWeekend, DateTime now) {
+Map<String, List<int>> checkNearestBusTimes(String busType, bool isWeekend, DateTime now, bool isUpdatedTimeTable) {
   List<int> curTime = DateFormat('HH:mm').format(now).split(':').map((t) => int.parse(t)).toList();
   if (curTime[0] == 0) curTime[0] = 24; // 현재 시간이 0시면 24시로 format 변경
 
-  // 버스 종류, 평일 구분에 따라 버스 시간표 선택
   late List<String> selectedBusTime;
-  switch (busType) {
-    case 'H221':
-      if (!isWeekend) {
-        selectedBusTime = H221_BUS_TIME['weekday']!;
-      } else {
-        selectedBusTime = H221_BUS_TIME['weekend']!;
-      }
-      break;
-    case 'HOVEY':
-      if (!isWeekend) {
-        selectedBusTime = HOVEY_BUS_TIME['weekday']!;
-      } else {
-        selectedBusTime = HOVEY_BUS_TIME['weekend']!;
-      }
-      break;
-    case 'TMC':
-      if (!isWeekend) {
-        selectedBusTime = TMC_BUS_TIME['weekday']!;
-      } else {
-        selectedBusTime = TMC_BUS_TIME['weekend']!;
-      }
-      break;
+
+  // 최신 시간표 사용
+  if (isUpdatedTimeTable) {
+    // 버스 종류, 평일 구분에 따라 버스 시간표 선택
+    switch (busType) {
+      case 'H221':
+        if (!isWeekend) {
+          selectedBusTime = H221_BUS_TIME['weekday']!;
+        } else {
+          selectedBusTime = H221_BUS_TIME['weekend']!;
+        }
+        break;
+      case 'HOVEY':
+        if (!isWeekend) {
+          selectedBusTime = HOVEY_BUS_TIME['weekday']!;
+        } else {
+          selectedBusTime = HOVEY_BUS_TIME['weekend']!;
+        }
+        break;
+      case 'TMC':
+        if (!isWeekend) {
+          selectedBusTime = TMC_BUS_TIME['weekday']!;
+        } else {
+          selectedBusTime = TMC_BUS_TIME['weekend']!;
+        }
+        break;
+    }
+  } else {  // 예전 시간표 사용
+    switch (busType) {
+      case 'H221':
+        if (!isWeekend) {
+          selectedBusTime = OLD_H221_BUS_TIME['weekday']!;
+        } else {
+          selectedBusTime = OLD_H221_BUS_TIME['weekend']!;
+        }
+        break;
+      case 'HOVEY':
+        if (!isWeekend) {
+          selectedBusTime = OLD_HOVEY_BUS_TIME['weekday']!;
+        } else {
+          selectedBusTime = OLD_HOVEY_BUS_TIME['weekend']!;
+        }
+        break;
+      case 'TMC':
+        if (!isWeekend) {
+          selectedBusTime = OLD_TMC_BUS_TIME['weekday']!;
+        } else {
+          selectedBusTime = OLD_TMC_BUS_TIME['weekend']!;
+        }
+        break;
+    }
   }
+
 
   // String 형태의 시각을 List<int>로 가공
   final List<List<int>> timeTable = selectedBusTime.map((time) => time.split(':').map((t) =>int.parse(t)).toList()).toList();
