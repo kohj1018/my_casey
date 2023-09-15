@@ -10,6 +10,7 @@ class BusTimeCard extends StatelessWidget {
   final String nextBusTime;
   final int nextBusMinDiff;
   final bool isWeekend;
+  final bool isUpdatedTimeTable;
 
   const BusTimeCard({
     required this.busType,
@@ -18,6 +19,7 @@ class BusTimeCard extends StatelessWidget {
     required this.nextBusTime,
     required this.nextBusMinDiff,
     required this.isWeekend,
+    required this.isUpdatedTimeTable,
     Key? key
   }) : super(key: key);
 
@@ -33,7 +35,7 @@ class BusTimeCard extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => DetailBusScheduleScreen(busType: busType, lastBusTime: lastBusTime, nextBusTime: nextBusTime, isWeekend: isWeekend),
+                builder: (context) => DetailBusScheduleScreen(busType: busType, lastBusTime: lastBusTime, nextBusTime: nextBusTime, isWeekend: isWeekend, isUpdatedTimeTable: isUpdatedTimeTable),
             ),
         );
       },

@@ -8,12 +8,14 @@ class DetailBusScheduleScreen extends StatelessWidget {
   final String lastBusTime;
   final String nextBusTime;
   final bool isWeekend;
+  final bool isUpdatedTimeTable;
 
   const DetailBusScheduleScreen({
     required this.busType,
     required this.lastBusTime,
     required this.nextBusTime,
     required this.isWeekend,
+    required this.isUpdatedTimeTable,
     Key? key
   }) : super(key: key);
 
@@ -21,21 +23,40 @@ class DetailBusScheduleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     late List<String> weekDayTimeTable;
     late List<String> weekendDayTimeTable;
+    final GlobalKey _widgetKey = GlobalKey();
 
-    switch (busType) {
-      case 'H221':
-        weekDayTimeTable = H221_BUS_TIME['weekday']!;
-        weekendDayTimeTable = H221_BUS_TIME['weekend']!;
-        break;
-      case 'HOVEY':
-        weekDayTimeTable = HOVEY_BUS_TIME['weekday']!;
-        weekendDayTimeTable = HOVEY_BUS_TIME['weekend']!;
-        break;
-      case 'TMC':
-        weekDayTimeTable = TMC_BUS_TIME['weekday']!;
-        weekendDayTimeTable = TMC_BUS_TIME['weekend']!;
-        break;
+    if (isUpdatedTimeTable) {
+      switch (busType) {
+        case 'H221':
+          weekDayTimeTable = H221_BUS_TIME['weekday']!;
+          weekendDayTimeTable = H221_BUS_TIME['weekend']!;
+          break;
+        case 'HOVEY':
+          weekDayTimeTable = HOVEY_BUS_TIME['weekday']!;
+          weekendDayTimeTable = HOVEY_BUS_TIME['weekend']!;
+          break;
+        case 'TMC':
+          weekDayTimeTable = TMC_BUS_TIME['weekday']!;
+          weekendDayTimeTable = TMC_BUS_TIME['weekend']!;
+          break;
+      }
+    } else {
+      switch (busType) {
+        case 'H221':
+          weekDayTimeTable = OLD_H221_BUS_TIME['weekday']!;
+          weekendDayTimeTable = OLD_H221_BUS_TIME['weekend']!;
+          break;
+        case 'HOVEY':
+          weekDayTimeTable = OLD_HOVEY_BUS_TIME['weekday']!;
+          weekendDayTimeTable = OLD_HOVEY_BUS_TIME['weekend']!;
+          break;
+        case 'TMC':
+          weekDayTimeTable = OLD_TMC_BUS_TIME['weekday']!;
+          weekendDayTimeTable = OLD_TMC_BUS_TIME['weekend']!;
+          break;
+      }
     }
+
 
     return Scaffold(
       body: SafeArea(
@@ -66,16 +87,18 @@ class DetailBusScheduleScreen extends StatelessWidget {
                               '평일',
                               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                             ),
-                            SizedBox(height: 16.0),
+                            const SizedBox(height: 16.0),
                             for (String time in weekDayTimeTable) Stack(
                                 children: [
-                                  Text(
+                                  if (!isWeekend && (lastBusTime == time || nextBusTime == time)) Text(
+                                    key: lastBusTime == time ? _widgetKey : null,
                                     '$time\n',
-                                    style: !isWeekend && (lastBusTime == time || nextBusTime == time)
-                                        ? TextStyle(color: PRIMARY_COLOR, fontWeight: FontWeight.bold)
-                                        : TextStyle(color: Colors.black)
+                                    style: const TextStyle(color: PRIMARY_COLOR, fontWeight: FontWeight.bold),
+                                  ) else Text(
+                                    '$time\n',
+                                    style: const TextStyle(color: Colors.black),
                                   ),
-                                  SizedBox(height: 8.0),
+                                  const SizedBox(height: 8.0),
                                 ]
                             ),
                           ],
@@ -92,16 +115,18 @@ class DetailBusScheduleScreen extends StatelessWidget {
                               '휴일',
                               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                             ),
-                            SizedBox(height: 16.0),
+                            const SizedBox(height: 16.0),
                             for (String time in weekendDayTimeTable) Stack(
                                 children: [
-                                  Text(
+                                  if (isWeekend && (lastBusTime == time || nextBusTime == time)) Text(
+                                    key: lastBusTime == time ? _widgetKey : null,
                                     '$time\n',
-                                    style: isWeekend && (lastBusTime == time || nextBusTime == time)
-                                        ? TextStyle(color: PRIMARY_COLOR, fontWeight: FontWeight.bold)
-                                        : TextStyle(color: Colors.black)
+                                    style: const TextStyle(color: PRIMARY_COLOR, fontWeight: FontWeight.bold),
+                                  ) else Text(
+                                  '$time\n',
+                                  style: const TextStyle(color: Colors.black),
                                   ),
-                                  SizedBox(height: 8.0),
+                                  const SizedBox(height: 8.0),
                                 ]
                             ),
                           ],

@@ -98,6 +98,7 @@ class _BusScheduleScreenState extends State<BusScheduleScreen> {
                             nextBusTime: '${h221BusInfo['nextBusTime']![0].toString().padLeft(2, '0')}:${h221BusInfo['nextBusTime']![1].toString().padLeft(2, '0')}',
                             nextBusMinDiff: h221BusInfo['nextBusTime']![2],
                             isWeekend: isWeekend,
+                            isUpdatedTimeTable: isUpdatedTimeTable,
                           ),
                           const SizedBox(height: 8.0),
                           BusTimeCard(
@@ -107,6 +108,7 @@ class _BusScheduleScreenState extends State<BusScheduleScreen> {
                             nextBusTime: '${hoveyBusInfo['nextBusTime']![0].toString().padLeft(2, '0')}:${hoveyBusInfo['nextBusTime']![1].toString().padLeft(2, '0')}',
                             nextBusMinDiff: hoveyBusInfo['nextBusTime']![2],
                             isWeekend: isWeekend,
+                            isUpdatedTimeTable: isUpdatedTimeTable,
                           ),
                           const SizedBox(height: 8.0),
                           BusTimeCard(
@@ -116,6 +118,7 @@ class _BusScheduleScreenState extends State<BusScheduleScreen> {
                             nextBusTime: '${tmcBusInfo['nextBusTime']![0].toString().padLeft(2, '0')}:${tmcBusInfo['nextBusTime']![1].toString().padLeft(2, '0')}',
                             nextBusMinDiff: tmcBusInfo['nextBusTime']![2],
                             isWeekend: isWeekend,
+                            isUpdatedTimeTable: isUpdatedTimeTable,
                           ),
                         ],
                       ),
