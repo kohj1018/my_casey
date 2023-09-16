@@ -75,7 +75,7 @@ class _BusScheduleScreenState extends State<BusScheduleScreen> {
                           RichText(
                             text: TextSpan(
                                 text: '휴일 여부 : ',
-                                style: TextStyle(color: Colors.black),
+                                style: const TextStyle(color: Colors.black),
                                 children: [
                                   TextSpan(
                                     text: isWeekend ? 'Yes' : 'No',

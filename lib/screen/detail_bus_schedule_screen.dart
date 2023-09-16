@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_casey/const/bus_time.dart';
 import 'package:my_casey/const/colors.dart';
 
-class DetailBusScheduleScreen extends StatelessWidget {
+class DetailBusScheduleScreen extends StatefulWidget {
 
   final String busType;
   final String lastBusTime;
@@ -20,13 +20,33 @@ class DetailBusScheduleScreen extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<DetailBusScheduleScreen> createState() => _DetailBusScheduleScreenState();
+}
+
+class _DetailBusScheduleScreenState extends State<DetailBusScheduleScreen> {
+  final GlobalKey _widgetKey = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance
+      .addPostFrameCallback((_) {
+        Scrollable.ensureVisible(
+          _widgetKey.currentContext!,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+          alignment: 0.5
+        );
+      });
+  }
+
+  @override
   Widget build(BuildContext context) {
     late List<String> weekDayTimeTable;
     late List<String> weekendDayTimeTable;
-    final GlobalKey _widgetKey = GlobalKey();
 
-    if (isUpdatedTimeTable) {
-      switch (busType) {
+    if (widget.isUpdatedTimeTable) {
+      switch (widget.busType) {
         case 'H221':
           weekDayTimeTable = H221_BUS_TIME['weekday']!;
           weekendDayTimeTable = H221_BUS_TIME['weekend']!;
@@ -41,7 +61,7 @@ class DetailBusScheduleScreen extends StatelessWidget {
           break;
       }
     } else {
-      switch (busType) {
+      switch (widget.busType) {
         case 'H221':
           weekDayTimeTable = OLD_H221_BUS_TIME['weekday']!;
           weekendDayTimeTable = OLD_H221_BUS_TIME['weekend']!;
@@ -72,8 +92,9 @@ class DetailBusScheduleScreen extends StatelessWidget {
                     Expanded(
                       flex: 1,
                       child: Container(
+                        padding: const EdgeInsets.only(top: 14.0),
                         decoration: BoxDecoration(
-                          color: !isWeekend ? Colors.black12 : Theme.of(context).scaffoldBackgroundColor,
+                          color: !widget.isWeekend ? Colors.black12 : Theme.of(context).scaffoldBackgroundColor,
                           border: const Border(
                             right: BorderSide(
                               width: 0.5,
@@ -88,19 +109,19 @@ class DetailBusScheduleScreen extends StatelessWidget {
                               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(height: 16.0),
-                            for (String time in weekDayTimeTable) Stack(
-                                children: [
-                                  if (!isWeekend && (lastBusTime == time || nextBusTime == time)) Text(
-                                    key: lastBusTime == time ? _widgetKey : null,
-                                    '$time\n',
-                                    style: const TextStyle(color: PRIMARY_COLOR, fontWeight: FontWeight.bold),
-                                  ) else Text(
-                                    '$time\n',
-                                    style: const TextStyle(color: Colors.black),
-                                  ),
-                                  const SizedBox(height: 8.0),
-                                ]
-                            ),
+                            for (String time in weekDayTimeTable) Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                              color: (!widget.isWeekend && (widget.lastBusTime == time || widget.nextBusTime == time)) ? PRIMARY_COLOR.withOpacity(0.5) : Colors.transparent,
+                              alignment: Alignment.center,
+                              child: Text(
+                                key: !widget.isWeekend && widget.lastBusTime == time ? _widgetKey : null,
+                                time,
+                                style: (!widget.isWeekend && (widget.lastBusTime == time || widget.nextBusTime == time))
+                                    ? const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)
+                                    : const TextStyle(color: Colors.black),
+                              ),
+                            )
                           ],
                         ),
                       ),
@@ -108,27 +129,28 @@ class DetailBusScheduleScreen extends StatelessWidget {
                     Expanded(
                       flex: 1,
                       child: Container(
-                        color: isWeekend ? Colors.black12 : Theme.of(context).scaffoldBackgroundColor,
+                        padding: const EdgeInsets.only(top: 14.0),
+                        color: widget.isWeekend ? Colors.black12 : Theme.of(context).scaffoldBackgroundColor,
                         child: Column(
                           children: [
                             const Text(
                               '휴일',
                               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                             ),
-                            const SizedBox(height: 16.0),
-                            for (String time in weekendDayTimeTable) Stack(
-                                children: [
-                                  if (isWeekend && (lastBusTime == time || nextBusTime == time)) Text(
-                                    key: lastBusTime == time ? _widgetKey : null,
-                                    '$time\n',
-                                    style: const TextStyle(color: PRIMARY_COLOR, fontWeight: FontWeight.bold),
-                                  ) else Text(
-                                  '$time\n',
-                                  style: const TextStyle(color: Colors.black),
-                                  ),
-                                  const SizedBox(height: 8.0),
-                                ]
-                            ),
+                            const SizedBox(height: 12.0),
+                            for (String time in weekendDayTimeTable) Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                              color: (widget.isWeekend && (widget.lastBusTime == time || widget.nextBusTime == time)) ? PRIMARY_COLOR.withOpacity(0.5) : Colors.transparent,
+                              alignment: Alignment.center,
+                              child: Text(
+                                key: widget.isWeekend && widget.lastBusTime == time ? _widgetKey : null,
+                                time,
+                                style: (widget.isWeekend && (widget.lastBusTime == time || widget.nextBusTime == time))
+                                    ? const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)
+                                    : const TextStyle(color: Colors.black),
+                              ),
+                            )
                           ],
                         ),
                       ),
@@ -161,8 +183,8 @@ class DetailBusScheduleScreen extends StatelessWidget {
                       ),
                       const SizedBox(width: 16.0),
                       Text(
-                        '$busType 버스 시간표',
-                        style: TextStyle(fontSize: 16.0),
+                        '${widget.busType} 버스 시간표',
+                        style: const TextStyle(fontSize: 16.0),
                       ),
                     ]
                 ),
