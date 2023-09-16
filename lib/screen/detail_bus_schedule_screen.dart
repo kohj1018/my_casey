@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:my_casey/const/bus_time.dart';
 import 'package:my_casey/const/colors.dart';
@@ -104,9 +105,9 @@ class _DetailBusScheduleScreenState extends State<DetailBusScheduleScreen> {
                         ),
                         child: Column(
                           children: [
-                            const Text(
-                              '평일',
-                              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                            Text(
+                              'weekday'.tr(),
+                              style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(height: 16.0),
                             for (String time in weekDayTimeTable) Container(
@@ -133,9 +134,9 @@ class _DetailBusScheduleScreenState extends State<DetailBusScheduleScreen> {
                         color: widget.isWeekend ? Colors.black12 : Theme.of(context).scaffoldBackgroundColor,
                         child: Column(
                           children: [
-                            const Text(
-                              '휴일',
-                              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                            Text(
+                              'weekend'.tr(),
+                              style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(height: 12.0),
                             for (String time in weekendDayTimeTable) Container(
@@ -183,7 +184,7 @@ class _DetailBusScheduleScreenState extends State<DetailBusScheduleScreen> {
                       ),
                       const SizedBox(width: 16.0),
                       Text(
-                        '${widget.busType} 버스 시간표',
+                        'busTimeTable'.tr(args: [widget.busType]),
                         style: const TextStyle(fontSize: 16.0),
                       ),
                     ]

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_casey/component/bus_time_card.dart';
@@ -68,13 +69,22 @@ class _BusScheduleScreenState extends State<BusScheduleScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            '현재시간 : $modifiedCurTime',
+                          RichText(
                             textAlign: TextAlign.left,
+                            text: TextSpan(
+                              text: 'curTime'.tr(),
+                              style: const TextStyle(color: Colors.black),
+                              children: [
+                                TextSpan(
+                                  text: modifiedCurTime,
+                                  style: const TextStyle(color: Colors.black),
+                                )
+                              ]
+                            )
                           ),
                           RichText(
                             text: TextSpan(
-                                text: '휴일 여부 : ',
+                                text: 'holidayOrNot'.tr(),
                                 style: const TextStyle(color: Colors.black),
                                 children: [
                                   TextSpan(
@@ -125,7 +135,7 @@ class _BusScheduleScreenState extends State<BusScheduleScreen> {
                       const SizedBox(height: 18.0),
                       Row(
                         children: [
-                          const Text('최신 시간표로 보기'),
+                          Text(tr('viewLatestTimetable')),
                           Switch(
                             value: isUpdatedTimeTable,
                             onChanged: (value) async {

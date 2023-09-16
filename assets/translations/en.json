@@ -1,0 +1,16 @@
+{
+  "curTime": "Current Time : ",
+  "holidayOrNot": "Holiday : ",
+  "departureBus": "{} Bus",
+  "afterDeparture": "Departure ",
+  "lapse": " ago",
+  "departure": "Departure in ",
+  "min": "{}min",
+  "before": "",
+  "viewLatestTimetable" : "View the latest timetable",
+  "timeTable" : "Bus TimeTable",
+  "schedule": "Schedule",
+  "busTimeTable": "{} Bus Timetable",
+  "weekday": "Weekday",
+  "weekend": "Weekend"
+}

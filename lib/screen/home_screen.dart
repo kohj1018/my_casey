@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:my_casey/screen/bus_schedule_screen.dart';
 import 'package:my_casey/screen/calendar_screen.dart';
@@ -35,14 +36,14 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const [
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.bus_alert_rounded),
-            label: '버스시간표',
+            icon: const Icon(Icons.bus_alert_rounded),
+            label: 'timeTable'.tr(),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_month),
-            label: '일정',
+            icon: const Icon(Icons.calendar_month),
+            label: 'schedule'.tr(),
           ),
         ],
         currentIndex: _selectedTapIdx,

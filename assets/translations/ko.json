@@ -1,0 +1,16 @@
+{
+  "curTime": "현재시간 : ",
+  "holidayOrNot": "휴일 여부 : ",
+  "departureBus": "{} 출발 버스",
+  "afterDeparture": "출발 후 ",
+  "lapse": " 경과",
+  "departure": "출발 ",
+  "min": "{}분",
+  "before": " 전",
+  "viewLatestTimetable" : "최신 시간표로 보기",
+  "timeTable" : "버스시간표",
+  "schedule": "일정",
+  "busTimeTable": "{} 버스 시간표",
+  "weekday": "평일",
+  "weekend": "휴일"
+}

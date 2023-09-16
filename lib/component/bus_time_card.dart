@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:my_casey/const/colors.dart';
 import 'package:my_casey/screen/detail_bus_schedule_screen.dart';
@@ -73,43 +74,67 @@ class BusTimeCard extends StatelessWidget {
                   children: [
                     if (lastBusMinDiff >= 0) RichText(
                       text: TextSpan(
-                        text: '$modifiedLastBusTime 출발 버스\n- 출발 후 ',
+                        text: 'departureBus'.tr(args: [modifiedLastBusTime]),
                         style: const TextStyle(
                           color: Colors.black,
                         ),
                         children: [
+                          const TextSpan(
+                            text: '\n- ',
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
                           TextSpan(
-                            text: '$lastBusMinDiff분',
+                            text: 'afterDeparture'.tr(),
+                            style: const TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                          TextSpan(
+                            text: 'min'.tr(args: [lastBusMinDiff.toString()]),
                             style: const TextStyle(
                               color: Colors.red,
                             ),
                           ),
-                          const TextSpan(
-                            text: ' 경과',
-                            style: TextStyle(
+                          TextSpan(
+                            text: 'lapse'.tr(),
+                            style: const TextStyle(
                               color: Colors.black,
                             ),
                           )
                         ]
                       ),
                     ),
-                    SizedBox(height: 8.0),
+                    const SizedBox(height: 8.0),
                     if (nextBusMinDiff >= 0) RichText(
                       text: TextSpan(
-                        text: '$modifiedNextBusTime 출발 버스\n- 출발 ',
+                        text: 'departureBus'.tr(args: [modifiedNextBusTime]),
                         style: const TextStyle(
                           color: Colors.black,
                         ),
                         children: [
+                          const TextSpan(
+                            text: '\n- ',
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
                           TextSpan(
-                            text: '$nextBusMinDiff분',
+                            text: 'departure'.tr(),
+                            style: const TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                          TextSpan(
+                            text: 'min'.tr(args: [nextBusMinDiff.toString()]),
                             style: const TextStyle(
                                 color: Colors.blueAccent,
                             ),
                           ),
-                          const TextSpan(
-                            text: ' 전',
-                            style: TextStyle(
+                          TextSpan(
+                            text: 'before'.tr(),
+                            style: const TextStyle(
                               color: Colors.black,
                             ),
                           )

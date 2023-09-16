@@ -18,7 +18,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
   @override
   Widget build(BuildContext context) {
     return TableCalendar(
-      locale: 'ko_KR',
       firstDay: DateTime.utc(2023, 9, 1),
       lastDay: DateTime.utc(2024, 10, 31),
       focusedDay: focusedDay,
@@ -51,7 +50,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
       calendarBuilders: CalendarBuilders(
         dowBuilder: (context, day) {
           if (day.weekday == DateTime.sunday) {
-            final text = DateFormat.E('ko').format(day);
+            final text = DateFormat.E().format(day);
 
             return Center(
               child: Text(
@@ -61,7 +60,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
             );
           }
           if (day.weekday == DateTime.saturday) {
-            final text = DateFormat.E('ko').format(day);
+            final text = DateFormat.E().format(day);
 
             return Center(
               child: Text(
