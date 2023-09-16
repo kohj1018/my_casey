@@ -73,28 +73,42 @@ class _CalendarScreenState extends State<CalendarScreen> {
         },
 
         defaultBuilder: (context, day, _) {
-          // DateTime nextDay = day.add(const Duration(days: 1));
+          DateTime yesterday = day.subtract(const Duration(days: 1));
+          DateTime tomorrow = day.add(const Duration(days: 1));
+          bool isYesterdayWeekend = false;
+          bool isTodayWeekend = false;
+          bool isTomorrowWeekend = false;
           for (List<int> weekendDay in WEEKEND_LIST) {
 
-            if (day.year == weekendDay[0] && day.month == weekendDay[1] && day.day == weekendDay[2]) {
+            if ((day.year == weekendDay[0] && day.month == weekendDay[1] && day.day == weekendDay[2]) || day.weekday == DateTime.saturday || day.weekday == DateTime.sunday) {
+              isTodayWeekend = true;
               return Center(
                 child: Text(
                   day.day.toString(),
-                  style: TextStyle(color: Colors.red),
+                  style: const TextStyle(color: Colors.red),
                 ),
               );
             }
 
-            // if (nextDay.year == weekendDay[0] && nextDay.month == weekendDay[1] && nextDay.day == weekendDay[2] && day.weekday != DateTime.sunday) {
-            //     return Center(
-            //       child: Text(
-            //         day.day.toString(),
-            //         style: TextStyle(color: Colors.blueAccent),
-            //       ),
-            //     );
-            // }
+            if ((yesterday.year == weekendDay[0] && yesterday.month == weekendDay[1] && yesterday.day == weekendDay[2]) || yesterday.weekday == DateTime.saturday || yesterday.weekday == DateTime.sunday) {
+              isYesterdayWeekend = true;
+            }
 
+            if ((tomorrow.year == weekendDay[0] && tomorrow.month == weekendDay[1] && tomorrow.day == weekendDay[2]) || tomorrow.weekday == DateTime.saturday || tomorrow.weekday == DateTime.sunday) {
+              isTomorrowWeekend = true;
+            }
           }
+
+          if (!isTodayWeekend && !isYesterdayWeekend && isTomorrowWeekend) {
+            return Center(
+              child: Text(
+                day.day.toString(),
+                style: const TextStyle(color: Colors.blueAccent),
+              ),
+            );
+          }
+
+          return null;
         },
       ),
     );
