@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.calendar_month),
-            label: 'schedule'.tr(),
+            label: '${'schedule'.tr()}(v3)',
           ),
         ],
         currentIndex: _selectedTapIdx,
