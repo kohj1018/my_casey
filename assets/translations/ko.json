@@ -12,5 +12,6 @@
   "schedule": "일정",
   "busTimeTable": "{} 버스 시간표",
   "weekday": "평일",
-  "weekend": "휴일"
+  "weekend": "휴일",
+  "openingHours": "운영 시간"
 }

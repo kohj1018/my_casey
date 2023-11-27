@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:my_casey/screen/bus_schedule_screen.dart';
 import 'package:my_casey/screen/calendar_screen.dart';
+import 'package:my_casey/screen/opening_hours_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -26,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final List<Widget> _widgetOptions = [
       const BusScheduleScreen(),
       const CalendarScreen(),
+      const OpeningHoursScreen(),
     ];
 
     return Scaffold(
@@ -44,6 +46,10 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: const Icon(Icons.calendar_month),
             label: '${'schedule'.tr()}(v3)',
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.punch_clock),
+            label: 'openingHours'.tr(),
           ),
         ],
         currentIndex: _selectedTapIdx,
