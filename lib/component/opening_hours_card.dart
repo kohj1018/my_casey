@@ -18,22 +18,30 @@ class OpeningHoursCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> resultText = [];
+    String name = facilityType;
+
+    DateTime today = DateTime.now();
 
     switch (facilityType) {
       case 'DFAC':
-        resultText = (isWeekend ? [
-          Text("BRUNCH : 09:30 ~ 13:00"),
-          SizedBox(height: 8.0),
-          Text("SUPPER : 17:00 ~ 18:30"),
-        ] : [
-          Text("BREAKFAST : 07:30 ~ 09:00"),
-          SizedBox(height: 8.0),
-          Text("LUNCH : 11:30 ~ 13:00"),
-          SizedBox(height: 8.0),
-          Text("DINNER : 17:00 ~ 18:30"),
-        ]);
+        if (isWeekend) {
+          resultText = [
+            Text("BRUNCH : 09:30 ~ 13:00"),
+            SizedBox(height: 8.0),
+            Text("SUPPER : 17:00 ~ 18:30"),
+          ];
+        } else{
+          resultText = [
+            Text("BREAKFAST : 07:30 ~ 09:00"),
+            SizedBox(height: 8.0),
+            Text("LUNCH : 11:30 ~ 13:00"),
+            SizedBox(height: 8.0),
+            Text("DINNER : 17:00 ~ 18:30"),
+          ];
+        }
         break;
       case 'KATUSA PX':
+        name = "KATUSA\nPX";
         if (isWeekend) {
           resultText = [
             const Text(
@@ -42,9 +50,10 @@ class OpeningHoursCard extends StatelessWidget {
             )
           ];
         } else {
-          DateTime today = DateTime.now();
           if (today.day == DateTime.friday || isTomorrowWeekend) {
-            resultText = [Text("10:00 ~ 14:40")];
+            resultText = [
+              Text("10:00 ~ 14:40")
+            ];
           } else if (today.day == DateTime.wednesday) {
             resultText = [
               Text("11:00 ~ 12:00"),
@@ -58,6 +67,38 @@ class OpeningHoursCard extends StatelessWidget {
               Text("17:40 ~ 20:00"),
             ];
           }
+        }
+        break;
+      case 'Barber Shop':
+        name = "Barber\nShop";
+        resultText = [
+          Text("10:00 ~ 19:00")
+        ];
+        break;
+      case 'CAC':
+        if (today.day == DateTime.sunday) {
+          resultText = [
+            Text("10:00 ~ 19:00"),
+            SizedBox(height: 8.0),
+            Text("LIBRARY : CLOSED"),
+          ];
+        } else {
+          resultText = [
+            Text("09:00 ~ 21:00"),
+            SizedBox(height: 8.0),
+            Text("LIBRARY : 10:00 ~ 19:00"),
+          ];
+        }
+        break;
+      case 'USO':
+        if (today.day == DateTime.saturday || today.day == DateTime.sunday) {
+          resultText = [
+            Text("09:00 ~ 18:00")
+          ];
+        } else {
+          resultText = [
+            Text("10:00 ~ 17:00")
+          ];
         }
         break;
     }
@@ -97,7 +138,7 @@ class OpeningHoursCard extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      (facilityType == "KATUSA PX" ? "KATUSA\nPX" : facilityType),
+                      name,
                       textAlign: TextAlign.center,
                     ),
                   ),
