@@ -13,5 +13,6 @@
   "busTimeTable": "{} Bus Timetable",
   "weekday": "Weekday",
   "weekend": "Weekend",
-  "openingHours": "Opening Hours"
+  "openingHours": "Opening Hours",
+  "detailFacilityOpeningHours": "{} Opening Hours"
 }
