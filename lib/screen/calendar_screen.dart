@@ -19,7 +19,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   Widget build(BuildContext context) {
     return TableCalendar(
       firstDay: DateTime.utc(2023, 9, 1),
-      lastDay: DateTime.utc(2024, 10, 31),
+      lastDay: DateTime.utc(2025, 9, 30),
       focusedDay: focusedDay,
       headerStyle: const HeaderStyle(
         formatButtonVisible: false,
