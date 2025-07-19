@@ -21,5 +21,18 @@
   "previousDeparture": "출발",
   "minutesAgo": "분 전",
   "nextBus": "다음 버스",
-  "recentBus": "방금 출발한 버스"
+  "recentBus": "방금 출발한 버스",
+  "memoEdit": "메모 수정",
+  "memoDelete": "메모 삭제",
+  "enterMemo": "메모를 입력하세요",
+  "cancel": "취소",
+  "save": "저장",
+  "delete": "삭제",
+  "deleteMemoConfirm": "이 메모를 삭제하시겠습니까?",
+  "noMemos": "메모가 없습니다",
+  "memoCount": "{}개",
+  "setTime": "시간 설정",
+  "timeOptional": "(선택사항)",
+  "selectTime": "시간 선택",
+  "removeTime": "시간 제거"
 }

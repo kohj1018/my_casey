@@ -21,5 +21,18 @@
   "previousDeparture": "departed",
   "minutesAgo": "min ago",
   "nextBus": "Next Bus",
-  "recentBus": "Recent Departure"
+  "recentBus": "Recent Departure",
+  "memoEdit": "Edit Memo",
+  "memoDelete": "Delete Memo",
+  "enterMemo": "Enter memo",
+  "cancel": "Cancel",
+  "save": "Save",
+  "delete": "Delete",
+  "deleteMemoConfirm": "Do you want to delete this memo?",
+  "noMemos": "No memos",
+  "memoCount": "{} items",
+  "setTime": "Set Time",
+  "timeOptional": "(Optional)",
+  "selectTime": "Select Time",
+  "removeTime": "Remove Time"
 }
