@@ -56,13 +56,12 @@ class BusTimeCard extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(16.0),
           child: Row(
             children: [
               _buildBusTypeSection(),
-              const SizedBox(width: 20.0),
+              const SizedBox(width: 16.0),
               Expanded(child: _buildTimeSection()),
-              _buildNextBusSection(modifiedNextBusTime),
             ],
           ),
         ),
@@ -97,20 +96,12 @@ class BusTimeCard extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            '운행 종료',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(height: 4),
           Text(
-            'lastBus'.tr(),
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.white.withOpacity(0.8),
+            'operationEnded'.tr(),
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
             ),
           ),
         ],
@@ -120,60 +111,144 @@ class BusTimeCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.baseline,
-          textBaseline: TextBaseline.alphabetic,
-          children: [
-            Text(
-              '$nextBusMinDiff',
-              style: const TextStyle(
-                fontSize: 36,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                height: 1.0,
-              ),
-            ),
-            const SizedBox(width: 4),
-            const Text(
-              '분 후',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 8),
-        _buildProgressBar(),
+        // 다음 버스 정보 (메인)
+        _buildNextBusInfo(),
+        
+        // 구분선
+        if (lastBusMinDiff >= 0) ...[
+          const SizedBox(height: 8),
+          Container(
+            height: 1,
+            color: Colors.white.withOpacity(0.3),
+          ),
+          const SizedBox(height: 8),
+          _buildPreviousBusInfo(),
+        ],
       ],
     );
   }
 
-  Widget _buildNextBusSection(String modifiedNextBusTime) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+  Widget _buildNextBusInfo() {
+    String modifiedNextBusTime = nextBusTime.startsWith('24') ? nextBusTime.replaceFirst('24', '00') : nextBusTime;
+    
+    return Stack(
       children: [
-        const Icon(
-          Icons.schedule,
-          color: Colors.white,
-          size: 24,
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'nextBus'.tr(),
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.white.withOpacity(0.8),
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
+                Text(
+                  '$nextBusMinDiff',
+                  style: const TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    height: 1.0,
+                  ),
+                ),
+                const SizedBox(width: 6),
+                Text(
+                  'minutesUntilArrival'.tr(),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 6),
+            _buildProgressBar(),
+          ],
         ),
-        const SizedBox(height: 4),
-        Text(
-          modifiedNextBusTime,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+        Positioned(
+          top: 0,
+          right: 0,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Icon(
+                Icons.access_time_rounded,
+                color: Colors.white.withOpacity(0.9),
+                size: 16,
+              ),
+              const SizedBox(height: 2),
+              Text(
+                modifiedNextBusTime,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              Text(
+                'scheduledDeparture'.tr(),
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Colors.white.withOpacity(0.8),
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ],
           ),
         ),
+      ],
+    );
+  }
+
+  Widget _buildPreviousBusInfo() {
+    String modifiedLastBusTime = lastBusTime.startsWith('24') ? lastBusTime.replaceFirst('24', '00') : lastBusTime;
+    
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
         Text(
-          'departure'.tr(),
+          'recentBus'.tr(),
           style: TextStyle(
             fontSize: 12,
             color: Colors.white.withOpacity(0.8),
+            fontWeight: FontWeight.w500,
           ),
+        ),
+        const SizedBox(height: 4),
+        Row(
+          children: [
+            Icon(
+              Icons.history,
+              color: Colors.white.withOpacity(0.9),
+              size: 18,
+            ),
+            const SizedBox(width: 6),
+            Text(
+              modifiedLastBusTime,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(width: 8),
+            Text(
+              '($lastBusMinDiff${'minutesAgo'.tr()})',
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.white.withOpacity(0.8),
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ],
         ),
       ],
     );
@@ -226,15 +301,15 @@ class BusTimeCard extends StatelessWidget {
 
   Color _getTimeColor() {
     if (nextBusMinDiff < 0) {
-      return const Color(0xFF6C757D); // 회색 - 운행 종료
+      return const Color(0xFF64748B); // 세련된 슬레이트 그레이
     } else if (nextBusMinDiff <= 3) {
-      return const Color(0xFFE74C3C); // 빨강 - 급함
+      return const Color(0xFFEF4444); // 모던 레드 (긴급)
     } else if (nextBusMinDiff <= 8) {
-      return const Color(0xFFF39C12); // 주황 - 보통
+      return const Color(0xFFF59E0B); // 세련된 앰버 (주의)
     } else if (nextBusMinDiff <= 15) {
-      return const Color(0xFF3498DB); // 파랑 - 여유
+      return const Color(0xFF3B82F6); // 모던 블루 (안정)
     } else {
-      return const Color(0xFF27AE60); // 초록 - 충분한 여유
+      return const Color(0xFF10B981); // 세련된 에메랄드 (여유)
     }
   }
 }

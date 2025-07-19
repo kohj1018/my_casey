@@ -14,5 +14,12 @@
   "weekday": "평일",
   "weekend": "휴일",
   "openingHours": "운영 시간",
-  "detailFacilityOpeningHours": "{} 운영 시간"
+  "detailFacilityOpeningHours": "{} 운영 시간",
+  "operationEnded": "운행 종료",
+  "minutesUntilArrival": "분 후 출발",
+  "scheduledDeparture": "출발 예정",
+  "previousDeparture": "출발",
+  "minutesAgo": "분 전",
+  "nextBus": "다음 버스",
+  "recentBus": "방금 출발한 버스"
 }

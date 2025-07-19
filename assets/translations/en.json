@@ -14,5 +14,12 @@
   "weekday": "Weekday",
   "weekend": "Weekend",
   "openingHours": "Opening Hours",
-  "detailFacilityOpeningHours": "{} Opening Hours"
+  "detailFacilityOpeningHours": "{} Opening Hours",
+  "operationEnded": "Service Ended",
+  "minutesUntilArrival": "min until departure",
+  "scheduledDeparture": "Scheduled",
+  "previousDeparture": "departed",
+  "minutesAgo": "min ago",
+  "nextBus": "Next Bus",
+  "recentBus": "Recent Departure"
 }
