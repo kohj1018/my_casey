@@ -3,11 +3,15 @@ import 'package:my_casey/screen/home_screen.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:my_casey/theme/app_theme.dart';
+import 'package:my_casey/services/ad_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await initializeDateFormatting();
+  
+  // AdMob 초기화
+  await AdManager.initialize();
 
   runApp(
     EasyLocalization(
