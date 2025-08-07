@@ -16,7 +16,7 @@
   "openingHours": "Opening Hours",
   "detailFacilityOpeningHours": "{} Opening Hours",
   "operationEnded": "Service Ended",
-  "minutesUntilArrival": "min until departure",
+  "minutesUntilArrival": "min left",
   "scheduledDeparture": "Scheduled",
   "previousDeparture": "departed",
   "minutesAgo": "min ago",
