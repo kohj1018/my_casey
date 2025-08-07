@@ -183,11 +183,14 @@ class _CalendarScreenState extends State<CalendarScreen> {
     showDialog(
       context: context,
       builder: (context) => StatefulBuilder(
-        builder: (context, setDialogState) => AlertDialog(
-          title: Text('memoEdit'.tr(), style: Theme.of(context).textTheme.titleLarge),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
+        builder: (context, setDialogState) => GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: AlertDialog(
+            title: Text('memoEdit'.tr(), style: Theme.of(context).textTheme.titleLarge),
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
               TextField(
                 controller: _memoController,
                 decoration: InputDecoration(
@@ -258,9 +261,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   ),
                 ],
               ),
-            ],
-          ),
-          actions: [
+              ],
+            ),
+            ),
+            actions: [
             TextButton(
               onPressed: () {
                 _memoController.clear();
@@ -290,7 +294,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
               },
               child: Text('save'.tr()),
             ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -577,11 +582,18 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView( // 스크롤 가능하게 변경
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(20.0, 16.0, 20.0, 20.0),
-        child: Column(
-          children: [
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(), // 키보드 숨기기
+      child: SingleChildScrollView( // 스크롤 가능하게 변경
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(
+            20.0, 
+            16.0, 
+            20.0, 
+            20.0 + MediaQuery.of(context).viewInsets.bottom, // 키보드 높이만큼 패딩 추가
+          ),
+          child: Column(
+            children: [
             Container(
               decoration: BoxDecoration(
                 color: AppColors.surface,
@@ -803,7 +815,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
             ),
             const SizedBox(height: 16),
             _buildMemoSection(),
-          ],
+            ],
+          ),
         ),
       ),
     );

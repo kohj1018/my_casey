@@ -12,7 +12,7 @@
   "schedule": "Schedule",
   "busTimeTable": "{} Bus Timetable",
   "weekday": "Weekday",
-  "weekend": "Weekend",
+  "weekend": "Holiday",
   "openingHours": "Opening Hours",
   "detailFacilityOpeningHours": "{} Opening Hours",
   "operationEnded": "Service Ended",

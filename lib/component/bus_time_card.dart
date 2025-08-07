@@ -25,8 +25,6 @@ class BusTimeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String modifiedNextBusTime = nextBusTime.startsWith('24') ? nextBusTime.replaceFirst('24', '00') : nextBusTime;
-    
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -61,7 +59,7 @@ class BusTimeCard extends StatelessWidget {
             children: [
               _buildBusTypeSection(),
               const SizedBox(width: 16.0),
-              Expanded(child: _buildTimeSection()),
+              Expanded(child: _buildTimeSection(context)),
             ],
           ),
         ),
@@ -91,7 +89,7 @@ class BusTimeCard extends StatelessWidget {
     );
   }
 
-  Widget _buildTimeSection() {
+  Widget _buildTimeSection(BuildContext context) {
     if (nextBusMinDiff < 0) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,10 +109,7 @@ class BusTimeCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // 다음 버스 정보 (메인)
-        _buildNextBusInfo(),
-        
-        // 구분선
+        _buildNextBusInfo(context),
         if (lastBusMinDiff >= 0) ...[
           const SizedBox(height: 8),
           Container(
@@ -128,7 +123,7 @@ class BusTimeCard extends StatelessWidget {
     );
   }
 
-  Widget _buildNextBusInfo() {
+  Widget _buildNextBusInfo(BuildContext context) {
     String modifiedNextBusTime = nextBusTime.startsWith('24') ? nextBusTime.replaceFirst('24', '00') : nextBusTime;
     
     return Stack(
@@ -255,16 +250,14 @@ class BusTimeCard extends StatelessWidget {
   }
 
   Widget _buildProgressBar() {
-    if (nextBusMinDiff < 0) return const SizedBox();
-    
-    double progress;
-    if (nextBusMinDiff <= 5) {
-      progress = (5 - nextBusMinDiff) / 5;
-    } else if (nextBusMinDiff <= 15) {
-      progress = (15 - nextBusMinDiff) / 15;
-    } else {
-      progress = 0.1;
+    if (nextBusMinDiff < 0 || lastBusMinDiff < 0) {
+      return const SizedBox();
     }
+
+    int totalInterval = nextBusMinDiff + lastBusMinDiff;
+    if (totalInterval == 0) return const SizedBox();
+
+    double progress = (totalInterval - nextBusMinDiff) / totalInterval;
 
     return Container(
       height: 6,
@@ -301,15 +294,15 @@ class BusTimeCard extends StatelessWidget {
 
   Color _getTimeColor() {
     if (nextBusMinDiff < 0) {
-      return const Color(0xFF64748B); // 세련된 슬레이트 그레이
+      return const Color(0xFF64748B); // 슬레이트 그레이
     } else if (nextBusMinDiff <= 3) {
-      return const Color(0xFFEF4444); // 모던 레드 (긴급)
+      return const Color(0xFFEF4444); // 레드 (긴급)
     } else if (nextBusMinDiff <= 8) {
-      return const Color(0xFFF59E0B); // 세련된 앰버 (주의)
+      return const Color(0xFFF59E0B); // 앰버 (주의)
     } else if (nextBusMinDiff <= 15) {
-      return const Color(0xFF3B82F6); // 모던 블루 (안정)
+      return const Color(0xFF3B82F6); // 블루 (안정)
     } else {
-      return const Color(0xFF10B981); // 세련된 에메랄드 (여유)
+      return const Color(0xFF10B981); // 에메랄드 (여유)
     }
   }
 }

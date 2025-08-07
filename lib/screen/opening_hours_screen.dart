@@ -15,73 +15,34 @@ class OpeningHoursScreen extends StatefulWidget {
 class _OpeningHoursScreenState extends State<OpeningHoursScreen> {
   Widget _buildStatusHeader(bool isWeekend) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 24.0),
-      padding: const EdgeInsets.all(20.0),
+      margin: const EdgeInsets.only(bottom: 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: isWeekend 
-              ? [AppColors.error.withOpacity(0.1), AppColors.error.withOpacity(0.05)]
-              : [AppColors.success.withOpacity(0.1), AppColors.success.withOpacity(0.05)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(20),
+        color: isWeekend 
+            ? AppColors.error.withOpacity(0.1)
+            : AppColors.success.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: isWeekend 
-              ? AppColors.error.withOpacity(0.2)
-              : AppColors.success.withOpacity(0.2),
+              ? AppColors.error.withOpacity(0.3)
+              : AppColors.success.withOpacity(0.3),
           width: 1,
         ),
       ),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: isWeekend ? AppColors.error : AppColors.success,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Icon(
-              isWeekend ? Icons.weekend_rounded : Icons.work_rounded,
-              color: Colors.white,
-              size: 24,
-            ),
+          Icon(
+            isWeekend ? Icons.weekend_rounded : Icons.work_rounded,
+            color: isWeekend ? AppColors.error : AppColors.success,
+            size: 20,
           ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'holidayOrNot'.tr(),
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: AppColors.textTertiary,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  isWeekend ? 'Holiday Schedule' : 'Weekday Schedule',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: isWeekend ? AppColors.error : AppColors.success,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            decoration: BoxDecoration(
+          const SizedBox(width: 8),
+          Text(
+            isWeekend ? 'weekend'.tr() : 'weekday'.tr(),
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color: isWeekend ? AppColors.error : AppColors.success,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Text(
-              isWeekend ? 'Yes' : 'No',
-              style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
-              ),
+              fontWeight: FontWeight.w600,
             ),
           ),
         ],

@@ -74,7 +74,7 @@ class _BusScheduleScreenState extends State<BusScheduleScreen> {
                 ),
                 const SizedBox(width: 3),
                 Text(
-                  isWeekend ? 'Holiday' : 'Weekday',
+                  isWeekend ? 'weekend'.tr() : 'weekday'.tr(),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: isWeekend ? AppColors.error : AppColors.success,
                     fontWeight: FontWeight.w600,

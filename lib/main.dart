@@ -11,7 +11,13 @@ void main() async {
   await initializeDateFormatting();
   
   // AdMob 초기화
-  await AdManager.initialize();
+  try {
+    print('🟡 AdMob 초기화 시작...');
+    await AdManager.initialize();
+    print('🟢 AdMob 초기화 완료!');
+  } catch (e) {
+    print('🔴 AdMob 초기화 실패: $e');
+  }
 
   runApp(
     EasyLocalization(
