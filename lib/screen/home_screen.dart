@@ -63,26 +63,26 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // 광고 배너
-          const SimpleBannerAd(),
-          
-          // 네비게이션 바
-          Container(
-            decoration: BoxDecoration(
-              color: AppColors.surface,
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.textPrimary.withOpacity(0.08),
-                  blurRadius: 20,
-                  offset: const Offset(0, -4),
-                  spreadRadius: 0,
-                ),
-              ],
-            ),
-            child: SafeArea(
+      bottomNavigationBar: SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // 광고 배너
+            const SimpleBannerAd(),
+            
+            // 네비게이션 바
+            Container(
+              decoration: BoxDecoration(
+                color: AppColors.surface,
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.textPrimary.withOpacity(0.08),
+                    blurRadius: 20,
+                    offset: const Offset(0, -4),
+                    spreadRadius: 0,
+                  ),
+                ],
+              ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 child: BottomNavigationBar(
@@ -125,8 +125,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

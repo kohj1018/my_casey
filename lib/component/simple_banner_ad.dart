@@ -158,13 +158,11 @@ class _SimpleBannerAdState extends State<SimpleBannerAd> {
           ),
         ],
       ),
-      child: SafeArea(
-        child: Container(
-          width: _bannerAd!.size.width.toDouble(),
-          height: _bannerAd!.size.height.toDouble(),
-          alignment: Alignment.center,
-          child: AdWidget(ad: _bannerAd!),
-        ),
+      child: Container(
+        width: _bannerAd!.size.width.toDouble(),
+        height: _bannerAd!.size.height.toDouble(),
+        alignment: Alignment.center,
+        child: AdWidget(ad: _bannerAd!),
       ),
     );
   }
