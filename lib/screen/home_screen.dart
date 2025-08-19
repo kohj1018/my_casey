@@ -33,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       resizeToAvoidBottomInset: true,
+      extendBody: true, // 바디를 네비게이션 바 뒤까지 확장
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -63,28 +64,36 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: SafeArea(
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.textPrimary.withOpacity(0.08),
+              blurRadius: 20,
+              offset: const Offset(0, -4),
+              spreadRadius: 0,
+            ),
+          ],
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             // 광고 배너
             const SimpleBannerAd(),
             
-            // 네비게이션 바
+            // 네비게이션 바 - 플랫폼별 최적화
             Container(
-              decoration: BoxDecoration(
-                color: AppColors.surface,
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.textPrimary.withOpacity(0.08),
-                    blurRadius: 20,
-                    offset: const Offset(0, -4),
-                    spreadRadius: 0,
-                  ),
-                ],
+              padding: EdgeInsets.only(
+                left: 16.0,
+                right: 16.0,
+                top: 8.0,
+                bottom: MediaQuery.of(context).viewPadding.bottom > 0 
+                    ? 4.0 // iOS: Home Indicator가 있는 기기
+                    : 12.0, // Android 또는 iOS Home Button 기기
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: SafeArea(
+                top: false,
                 child: BottomNavigationBar(
                   backgroundColor: Colors.transparent,
                   elevation: 0,

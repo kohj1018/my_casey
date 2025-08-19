@@ -34,5 +34,7 @@
   "setTime": "시간 설정",
   "timeOptional": "(선택사항)",
   "selectTime": "시간 선택",
-  "removeTime": "시간 제거"
+  "removeTime": "시간 제거",
+  "enterMemoFirst": "메모를 먼저 입력해주세요",
+  "memoRequired": "메모 입력 필요"
 }

@@ -123,7 +123,13 @@ class _CalendarScreenState extends State<CalendarScreen> {
   }
 
   void _addMemo() {
-    if (_memoController.text.trim().isEmpty || selectedDay == null) return;
+    // 유효성 검사: 메모가 비어있으면 경고창 표시
+    if (_memoController.text.trim().isEmpty) {
+      _showMemoRequiredDialog();
+      return;
+    }
+    
+    if (selectedDay == null) return;
 
     final newMemo = CalendarMemo(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -140,6 +146,53 @@ class _CalendarScreenState extends State<CalendarScreen> {
     _memoController.clear();
     _selectedTime = null;
     _loadMemosForDate(selectedDay!); // 정렬을 위해 다시 로드
+  }
+
+  void _showMemoRequiredDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        title: Row(
+          children: [
+            Icon(
+              Icons.warning_amber_rounded,
+              color: AppColors.warning,
+              size: 24,
+            ),
+            const SizedBox(width: 8),
+            Text(
+              'memoRequired'.tr(),
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                color: AppColors.textPrimary,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
+        content: Text(
+          'enterMemoFirst'.tr(),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            color: AppColors.textSecondary,
+          ),
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () => Navigator.pop(context),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            child: Text('cancel'.tr()),
+          ),
+        ],
+      ),
+    );
   }
 
   Future<void> _selectTime() async {
@@ -366,43 +419,109 @@ class _CalendarScreenState extends State<CalendarScreen> {
         
         const SizedBox(height: 12),
         
-        // 메모 추가 입력
+        // 메모 추가 입력 - 개선된 UI
         Container(
-          padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: AppColors.surfaceLight,
-            borderRadius: BorderRadius.circular(12),
+            color: AppColors.surface,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: AppColors.surfaceLight,
+              width: 1,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.textPrimary.withOpacity(0.05),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
           child: Column(
             children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: _memoController,
-                      decoration: InputDecoration(
-                        hintText: 'enterMemo'.tr(),
-                        hintStyle: TextStyle(color: AppColors.textTertiary, fontSize: 14),
-                        border: InputBorder.none,
-                        isDense: true,
+              // 메인 입력 영역
+              Container(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    // 텍스트 입력 필드 (넓어진 버전)
+                    Expanded(
+                      child: TextField(
+                        controller: _memoController,
+                        decoration: InputDecoration(
+                          hintText: 'enterMemo'.tr(),
+                          hintStyle: TextStyle(
+                            color: AppColors.textTertiary,
+                            fontSize: 15,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
+                              color: AppColors.surfaceLight,
+                              width: 1,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
+                              color: AppColors.surfaceLight,
+                              width: 1,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
+                              color: AppColors.primary,
+                              width: 2,
+                            ),
+                          ),
+                          filled: true,
+                          fillColor: AppColors.surfaceLight.withOpacity(0.3),
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 12,
+                          ),
+                          isDense: true,
+                        ),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontSize: 15,
+                        ),
+                        maxLines: 1,
+                        textInputAction: TextInputAction.done,
+                        onSubmitted: (_) => _addMemo(),
                       ),
-                      style: Theme.of(context).textTheme.bodyMedium,
-                      onSubmitted: (_) => _addMemo(),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  GestureDetector(
-                    onTap: _addMemo,
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(8),
+                    
+                    const SizedBox(width: 12),
+                    
+                    // 추가 버튼
+                    GestureDetector(
+                      onTap: _addMemo,
+                      child: Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: AppColors.primaryGradient,
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.primary.withOpacity(0.3),
+                              blurRadius: 8,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Icon(
+                          Icons.add_rounded,
+                          color: Colors.white,
+                          size: 20,
+                        ),
                       ),
-                      child: Icon(Icons.add, color: Colors.white, size: 20),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               if (_selectedTime != null) ...[
                 const SizedBox(height: 8),
@@ -439,44 +558,47 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   ],
                 ),
               ],
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: _selectTime,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                      decoration: BoxDecoration(
-                        color: AppColors.surface,
-                        borderRadius: BorderRadius.circular(6),
-                        border: Border.all(color: AppColors.primary.withOpacity(0.3)),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.schedule, size: 14, color: AppColors.primary),
-                          const SizedBox(width: 4),
-                          Text(
-                            'setTime'.tr(),
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: AppColors.primary,
-                              fontWeight: FontWeight.w500,
+              // 시간 설정 버튼 - 패딩 추가
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: _selectTime,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: AppColors.surface,
+                          borderRadius: BorderRadius.circular(6),
+                          border: Border.all(color: AppColors.primary.withOpacity(0.3)),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.schedule, size: 14, color: AppColors.primary),
+                            const SizedBox(width: 4),
+                            Text(
+                              'setTime'.tr(),
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: AppColors.primary,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    'timeOptional'.tr(),
-                    style: TextStyle(
-                      fontSize: 11,
-                      color: AppColors.textTertiary,
+                    const SizedBox(width: 8),
+                    Text(
+                      'timeOptional'.tr(),
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: AppColors.textTertiary,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
@@ -586,11 +708,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
       onTap: () => FocusScope.of(context).unfocus(), // 키보드 숨기기
       child: SingleChildScrollView( // 스크롤 가능하게 변경
         child: Padding(
-          padding: EdgeInsets.fromLTRB(
-            20.0, 
-            16.0, 
-            20.0, 
-            20.0 + MediaQuery.of(context).viewInsets.bottom, // 키보드 높이만큼 패딩 추가
+          padding: EdgeInsets.only(
+            bottom: 20.0 + MediaQuery.of(context).viewInsets.bottom, // 키보드 높이만큼 패딩 추가
           ),
           child: Column(
             children: [
@@ -610,8 +729,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 borderRadius: BorderRadius.circular(20),
                 child: TableCalendar(
                   firstDay: DateTime.utc(2023, 9, 1),
-                  lastDay: DateTime.utc(2025, 9, 30),
+                  lastDay: DateTime.utc(2026, 9, 30),
                   focusedDay: focusedDay,
+                  // 달력 네비게이션 제한
+                  availableGestures: AvailableGestures.horizontalSwipe,
+                  calendarFormat: CalendarFormat.month,
                   headerStyle: HeaderStyle(
                     formatButtonVisible: false,
                     titleCentered: true,
@@ -645,6 +767,22 @@ class _CalendarScreenState extends State<CalendarScreen> {
                     ),
                     headerPadding: const EdgeInsets.symmetric(vertical: 16),
                   ),
+                  onPageChanged: (DateTime focusedDay) {
+                    // 날짜 범위 제한 체크
+                    final firstDay = DateTime.utc(2023, 9, 1);
+                    final lastDay = DateTime.utc(2026, 9, 30);
+                    
+                    if (focusedDay.isBefore(firstDay) || focusedDay.isAfter(lastDay)) {
+                      // 범위를 벗어나면 이전 유효한 날짜로 되돌림
+                      setState(() {
+                        this.focusedDay = focusedDay.isBefore(firstDay) ? firstDay : lastDay;
+                      });
+                    } else {
+                      setState(() {
+                        this.focusedDay = focusedDay;
+                      });
+                    }
+                  },
                   onDaySelected: (DateTime selectedDay, DateTime focusedDay) {
                     setState(() {
                       this.selectedDay = selectedDay;

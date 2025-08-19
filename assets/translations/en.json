@@ -34,5 +34,7 @@
   "setTime": "Set Time",
   "timeOptional": "(Optional)",
   "selectTime": "Select Time",
-  "removeTime": "Remove Time"
+  "removeTime": "Remove Time",
+  "enterMemoFirst": "Please enter a memo first",
+  "memoRequired": "Memo Required"
 }
